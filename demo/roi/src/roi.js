@@ -283,10 +283,10 @@ class ProductPerformance extends ForeignObjectElement {
                         <div class="jj-field-horizontal">
                             <label>
                                 <span>Value</span>
-                                <input @selector="value"
+                                <input @selector="valueFormatted"
                                     class="jj-input"
                                     name="value"
-                                    type="number"
+                                    type="text"
                                     readonly="true"
                                 />
                             </label>
@@ -294,10 +294,10 @@ class ProductPerformance extends ForeignObjectElement {
                         <div class="jj-field-horizontal">
                             <label>
                                 <span>ROI</span>
-                                <input @selector="roi"
+                                <input @selector="roiFormatted"
                                     class="jj-input"
                                     name="roi"
-                                    type="number"
+                                    type="text"
                                     readonly="true"
                                 />
                             </label>
@@ -310,6 +310,7 @@ class ProductPerformance extends ForeignObjectElement {
 
     setValue(value) {
         this.attr('value/value', value);
+        this.attr('valueFormatted/value', formatValue(value));
     }
 
     getValue() {
@@ -318,6 +319,7 @@ class ProductPerformance extends ForeignObjectElement {
 
     setROI(roi) {
         this.attr('roi/value', roi);
+        this.attr('roiFormatted/value', formatValue(roi));
     }
 }
 
@@ -346,10 +348,10 @@ class OverallPerformance extends ForeignObjectElement {
                         <div class="jj-field-horizontal">
                             <label>
                                 <span>Value</span>
-                                <input @selector="value"
+                                <input @selector="valueFormatted"
                                     class="jj-input"
                                     name="value"
-                                    type="number"
+                                    type="text"
                                     readonly="true"
                                 />
                             </label>
@@ -357,10 +359,10 @@ class OverallPerformance extends ForeignObjectElement {
                         <div class="jj-field-horizontal">
                             <label>
                                 <span>ROI</span>
-                                <input @selector="roi"
+                                <input @selector="roiFormatted"
                                     class="jj-input"
                                     name="roi"
-                                    type="number"
+                                    type="text"
                                     readonly="true"
                                 />
                             </label>
@@ -373,10 +375,12 @@ class OverallPerformance extends ForeignObjectElement {
 
     setValue(value) {
         this.attr('value/value', value);
+        this.attr('valueFormatted/value', formatValue(value));
     }
 
     setROI(roi) {
         this.attr('roi/value', roi);
+        this.attr('roiFormatted/value', formatValue(roi));
     }
 }
 
@@ -479,10 +483,10 @@ const goldPerformance = new ProductPerformance({
         label: {
             html: 'Gold'
         },
-        value: {
+        valueFormatted: {
             tabindex: 6,
         },
-        roi: {
+        roiFormatted: {
             tabindex: 7,
         }
     }
@@ -495,10 +499,10 @@ const bitcoinPerformance = new ProductPerformance({
         label: {
             html: 'Bitcoin'
         },
-        value: {
+        valueFormatted: {
             tabindex: 8,
         },
-        roi: {
+        roiFormatted: {
             tabindex: 9,
         }
     }
@@ -511,10 +515,10 @@ const sp500Performance = new ProductPerformance({
         label: {
             html: 'S&P 500'
         },
-        value: {
+        valueFormatted: {
             tabindex: 10,
         },
-        roi: {
+        roiFormatted: {
             tabindex: 11,
         }
     }
@@ -527,10 +531,10 @@ const performance = new OverallPerformance({
         body: {
             fill: SECONDARY_COLOR
         },
-        value: {
+        valueFormatted: {
             tabindex: 12,
         },
-        roi: {
+        roiFormatted: {
             tabindex: 13,
         }
     }
@@ -637,13 +641,13 @@ function calculatePerformance() {
         const [product] = graph.getNeighbors(productPerf, { inbound: true });
         const value = calculateProductValue(product);
         const roi = calculateProductROI(product.getPercentage(), value);
-        productPerf.setValue(value.toFixed(2));
-        productPerf.setROI(roi.toFixed(2));
+        productPerf.setValue(value);
+        productPerf.setROI(roi);
     });
     const overallValue = productPerformances.reduce((total, productPerf) => total + productPerf.getValue(), 0);
     const overallRoi = calculateProductROI(100, overallValue);
-    performance.setValue(overallValue.toFixed(2));
-    performance.setROI(overallRoi.toFixed(2));
+    performance.setValue(overallValue);
+    performance.setROI(overallRoi);
 }
 
 function calculateProductValue(product) {
@@ -659,6 +663,13 @@ function calculateProductROI(percentage, value) {
     const funds = investment.getFunds();
     const cost = funds * percentage / 100;
     return (value - cost) / cost * 100;
+}
+
+function formatValue(value) {
+    return value.toLocaleString('en', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
 }
 
 calculatePerformance();
