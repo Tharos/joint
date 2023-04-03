@@ -660,7 +660,7 @@ function calculateProductValue(product) {
 function calculateProductROI(percentage, value) {
     const funds = investment.getFunds();
     const cost = funds * percentage / 100;
-    return (value - cost) / cost * 100;
+    return cost === 0 ? 0 : (value - cost) / cost * 100;
 }
 
 function formatValue(value) {
