@@ -283,6 +283,7 @@ class ProductPerformance extends ForeignObjectElement {
                         <div class="jj-field-horizontal">
                             <label>
                                 <span>Value</span>
+                                <!-- Why type text instead of number? See accessibility notes in the end of the demo ↓ -->
                                 <input @selector="value"
                                     class="jj-input"
                                     name="value"
@@ -410,6 +411,7 @@ const investment = new Investment({
     attrs: {
         funds: {
             value: 100,
+            // Do tab indexes greater than zero violate accessibility? See accessibility notes in the end of the demo ↓
             tabindex: 1,
         },
         year: {
@@ -671,3 +673,17 @@ function formatValue(value) {
 }
 
 calculatePerformance();
+
+// Accessibility notes
+//
+//   Tab indexes
+//       It is generally considered an accessibility antipattern to use tab indexes greater than zero. The focusing
+//       order should be implemented by appropriately ordering the elements in the DOM. However, since we are combining
+//       SVG and XHTML in this demo, the ordering of the elements in the DOM must also meet the demands of SVG. In this
+//       case, using tab indexes with natural number values can be a helpful way to define the desired focusing order.
+//
+//   Input types (number vs text)
+//       It is common to use the "number" type for inputs that contain numeric values. However, when this type is used
+//       in combination with the "readonly" attribute, certain screen readers (such as VoiceOver on MacOS) may not handle
+//       it properly, and may even allow the input value to be changed. A workaround for this issue is to use the "text"
+//       type with the "readonly" attribute, and to properly format the value to ensure that it is displayed as a number.
