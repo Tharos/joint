@@ -283,7 +283,7 @@ class ProductPerformance extends ForeignObjectElement {
                         <div class="jj-field-horizontal">
                             <label>
                                 <span>Value</span>
-                                <input @selector="valueFormatted"
+                                <input @selector="value"
                                     class="jj-input"
                                     name="value"
                                     type="text"
@@ -294,7 +294,7 @@ class ProductPerformance extends ForeignObjectElement {
                         <div class="jj-field-horizontal">
                             <label>
                                 <span>ROI</span>
-                                <input @selector="roiFormatted"
+                                <input @selector="roi"
                                     class="jj-input"
                                     name="roi"
                                     type="text"
@@ -309,17 +309,16 @@ class ProductPerformance extends ForeignObjectElement {
     }
 
     setValue(value) {
-        this.attr('value/value', value);
-        this.attr('valueFormatted/value', formatValue(value));
+        this.set('value', value);
+        this.attr('value/value', formatValue(value));
     }
 
     getValue() {
-        return Number(this.attr('value/value'));
+        return this.get('value');
     }
 
     setROI(roi) {
-        this.attr('roi/value', roi);
-        this.attr('roiFormatted/value', formatValue(roi));
+        this.attr('roi/value', formatValue(roi));
     }
 }
 
@@ -348,7 +347,7 @@ class OverallPerformance extends ForeignObjectElement {
                         <div class="jj-field-horizontal">
                             <label>
                                 <span>Value</span>
-                                <input @selector="valueFormatted"
+                                <input @selector="value"
                                     class="jj-input"
                                     name="value"
                                     type="text"
@@ -359,7 +358,7 @@ class OverallPerformance extends ForeignObjectElement {
                         <div class="jj-field-horizontal">
                             <label>
                                 <span>ROI</span>
-                                <input @selector="roiFormatted"
+                                <input @selector="roi"
                                     class="jj-input"
                                     name="roi"
                                     type="text"
@@ -374,13 +373,12 @@ class OverallPerformance extends ForeignObjectElement {
     }
 
     setValue(value) {
-        this.attr('value/value', value);
-        this.attr('valueFormatted/value', formatValue(value));
+        this.set('value', value);
+        this.attr('value/value', formatValue(value));
     }
 
     setROI(roi) {
-        this.attr('roi/value', roi);
-        this.attr('roiFormatted/value', formatValue(roi));
+        this.attr('roi/value', formatValue(roi));
     }
 }
 
@@ -483,10 +481,10 @@ const goldPerformance = new ProductPerformance({
         label: {
             html: 'Gold'
         },
-        valueFormatted: {
+        value: {
             tabindex: 6,
         },
-        roiFormatted: {
+        roi: {
             tabindex: 7,
         }
     }
@@ -499,10 +497,10 @@ const bitcoinPerformance = new ProductPerformance({
         label: {
             html: 'Bitcoin'
         },
-        valueFormatted: {
+        value: {
             tabindex: 8,
         },
-        roiFormatted: {
+        roi: {
             tabindex: 9,
         }
     }
@@ -515,10 +513,10 @@ const sp500Performance = new ProductPerformance({
         label: {
             html: 'S&P 500'
         },
-        valueFormatted: {
+        value: {
             tabindex: 10,
         },
-        roiFormatted: {
+        roi: {
             tabindex: 11,
         }
     }
@@ -531,10 +529,10 @@ const performance = new OverallPerformance({
         body: {
             fill: SECONDARY_COLOR
         },
-        valueFormatted: {
+        value: {
             tabindex: 12,
         },
-        roiFormatted: {
+        roi: {
             tabindex: 13,
         }
     }
