@@ -114,7 +114,7 @@ A layout which evenly spreads ports along a line defined by a `start` and `end` 
             <table>
                 <tr>
                     <td><b>start</b></td>
-                    <td rowspan="2">{ x: number|string, y: number|string }</td>
+                    <td rowspan="2"><code>{ x: number|string, y: number|string }</code></td>
                     <td>The line starting point.</td>
                     <td rowspan="2"><code>x</code> and <code>y</code> can be a percentage string e.g. <code>'50%'</code>, <a href="#dia.attributes.calc">calc()</a> expression, or a number</td>
                 </tr>
